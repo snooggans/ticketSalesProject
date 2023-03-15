@@ -36,7 +36,7 @@ export class SingleTourComponent implements OnInit, OnDestroy{
 
     this.responsiveOptions = [
       {
-        breakpoint: '2560px',
+        breakpoint: '3440px',
         numVisible: 2,
         numScroll: 2
       },
