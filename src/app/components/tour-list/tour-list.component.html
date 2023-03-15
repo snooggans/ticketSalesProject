@@ -1,0 +1,66 @@
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <input class="form-control form-control-lg" type="text" placeholder="Поиск тура" aria-label="tour-search "
+               [(ngModel)]="tourSearch" (keyup)="onTourSearch()">
+      </div>
+      <div class="col-md-4">
+        <p-multiSelect [options]="formatedCountries"
+                       optionLabel="name"
+                       [(ngModel)]="selectedCountries"
+                       (onChange)="onCountryFilter(); selectedPlaces = []"
+                       defaultLabel="Страны"
+                       [style]="{'width':'100%'}"
+                       display="chip"
+        ></p-multiSelect>
+      </div>
+      <div class="col-md-4">
+        <p-multiSelect [disabled]="!isActivePlaces"
+                       [options]="formatedPlaces"
+                       optionLabel="name"
+                       [(ngModel)]="selectedPlaces"
+                       (onChange)="onPlaceFilter()"
+                       defaultLabel="Локации"
+                       [style]="{'width':'100%'}"
+                       display="chip"
+        ></p-multiSelect>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-5">
+  <div *ngIf="foundTours.length; else notFound" class="row">
+    <div *ngFor="let tour of foundTours"
+         class="col-md-6 col-xl-4 mb-4">
+      <div class="tour-list-item">
+        <div class="tour-list-item__img"
+             [ngStyle]="{'background': 'url(http://localhost:3000/public/400x300-' + tour.img + ') center / cover'}">
+          <div class="tour-list-item__price">{{tour.price}} ₽</div>
+          <div class="tour-list-item__loc"><i class="bi bi-geo-alt-fill"></i>{{tour.country}}, {{tour.place}}</div>
+        </div>
+        <div class="tour-list-item__content">
+          <span class="h4 mt-4 mb-3">{{tour.title}}</span>
+          <div class="tour-list-item__to"><i class="bi bi-airplane-fill"></i> {{tour.tourOperator}}</div>
+          <div class="tour-list-item__desc my-4">{{tour.description | slice:0:200}}...</div>
+
+          <div class="d-flex">
+            <button *ngIf="isAdmin" class="btn btn-danger me-3" type="button" (click)="onDeleteTour(tour._id)"><i
+              class="bi bi-trash3-fill"></i>
+            </button>
+
+            <button [routerLink]="['/tours', tour._id]" class="btn btn-primary w-100">Подробнее</button>
+
+            <button *ngIf="isAdmin" [routerLink]="['/edit-tour', tour._id]" class="btn btn-warning ms-3" type="button">
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <p class="h3">К сожалению ничего не найдено...</p>
+</ng-template>

@@ -1,0 +1,23 @@
+.tour-list-item{
+  display: flex;
+  flex-direction: column;
+  background-color: cadetblue;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+
+  &__img{
+    height: 200px;
+  }
+
+  &__content{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  &__desc{
+    flex: 1;
+  }
+}

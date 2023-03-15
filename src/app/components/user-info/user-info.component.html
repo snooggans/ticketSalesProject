@@ -1,0 +1,65 @@
+<h3 class="mb-3">Личные данные</h3>
+
+<form class="mb-5" [formGroup]="userForm" (ngSubmit)="onUserFormSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="fistName" type="text" class="form-control" id="fistName" placeholder="Имя">
+        <label for="fistName">Имя</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Фамилия">
+        <label for="lastName">Фамилия</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input formControlName="birthday" type="date" class="form-control" id="birthday" placeholder="Дата рождения">
+        <label for="birthday">Дата рождения</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="email" type="email" class="form-control" id="email" placeholder="E-Mail">
+        <label for="email">E-Mail</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="citizen" type="text" class="form-control" id="citizen" placeholder="Гражданство">
+        <label for="citizen">Гражданство</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-outline-primary btn-lg me-2" (click)="initUserForm()">Сброс</button>
+      <button type="submit" [disabled]="disabled || userForm.invalid" class="btn btn-primary btn-lg">Обновить</button>
+    </div>
+  </div>
+  <p-messages [(value)]="msgsUserInfo" [enableService]="false"></p-messages>
+</form>
+
+<h3 class="mb-3">Смена пароля</h3>
+<small>Минимум 3 символа</small>
+
+<form class="mb-5" [formGroup]="newPasswordForm" (ngSubmit)="onNewPasswordFormSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="newPsw" type="password" class="form-control" id="newPsw" placeholder="Новый пароль">
+        <label for="newPsw">Новый пароль</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="newPsw2" type="password" class="form-control" id="newPsw2" placeholder="Новый пароль еще раз">
+        <label for="newPsw2">Новый пароль еще раз</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button type="submit" [disabled]="disabled || newPasswordForm.invalid" class="btn btn-primary btn-lg">Сменить</button>
+    </div>
+  </div>
+  <p-messages [(value)]="msgsNewPsw" [enableService]="false"></p-messages>
+</form>

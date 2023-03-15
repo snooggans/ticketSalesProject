@@ -1,0 +1,85 @@
+<div class="page-header"
+     [ngStyle]="{background: tour.img ? 'url(http://localhost:3000/public/'+tour.img+') center / cover' : ''}">
+  <div class="overlay"></div>
+  <div class="container page-header__inner">
+    <h1>{{tour.title}}</h1>
+    <h2 class="h3">{{tour.country}}, {{tour.place}}</h2>
+  </div>
+</div>
+
+<div class="tour-content container mt-5">
+  <img *ngIf="tour.img" class="w-100" [src]="'http://localhost:3000/public/' + tour.img" alt="{{tour.title}}">
+</div>
+
+<div class="tour-content__desc py-5">
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center">
+      <p class="h4 mb-0 me-5"><i class="bi bi-tag-fill me-2"></i>Цена: {{tour.price }}₽</p>
+      <p class="h4 mb-0 me-5"><i class="bi bi-airplane-fill me-2"></i>Тур-оператор: {{tour.tourOperator}}</p>
+    </div>
+    <div class="w-100 text-center mt-4">
+      <button *ngIf="userService.isloggedIn$ | async; else login" class="btn btn-primary  btn-lg" data-bs-toggle="modal"
+              data-bs-target="#order-modal" (click)="formActive=true">Заказать тур
+      </button>
+      <ng-template #login>
+        <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling"><i class="bi bi-person-circle me-1"></i> Войти
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div class=" py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <h3 class="text-center pb-2">Описание тура</h3>
+        <p>{{tour.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-light">
+  <div *ngIf="nearestTours && nearestTours.length>0" class="container pb-5">
+    <h3 class="py-5 text-center">Похожие туры</h3>
+    <p-carousel [value]="nearestTours" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+                [responsiveOptions]="responsiveOptions" [circular]="true" [autoplayInterval]="3000">
+      <ng-template let-nt pTemplate="item">
+        <div class="tour-list-item">
+          <div class="tour-list-item__img"
+               [ngStyle]="{'background': 'url(http://localhost:3000/public/400x300-' + nt.img + ') center / cover'}">
+            <div class="tour-list-item__price">{{nt.price}} ₽</div>
+            <div class="tour-list-item__loc"><i class="bi bi-geo-alt-fill"></i>{{nt.country}}, {{nt.place}}</div>
+          </div>
+          <div class="tour-list-item__content">
+            <span class="h4 mt-4 mb-3">{{nt.title}}</span>
+            <div class="tour-list-item__to"><i class="bi bi-airplane-fill"></i> {{nt.tourOperator}}</div>
+            <div class="tour-list-item__desc my-4">{{nt.description | slice:0:200}}...</div>
+
+            <div class="d-flex">
+              <button [routerLink]="['/tours', nt._id]" class="btn btn-primary w-100">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</div>
+
+<div *ngIf="userService.isloggedIn$ | async" class="modal modal-xl fade" tabindex="-1" id="order-modal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Оформления заказа</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-order-form [tourID]="tourID" [tour]="tour" [isFormActive]="formActive"
+                        (isFormActiveOut)="formActive=$event"></app-order-form>
+      </div>
+    </div>
+  </div>
+</div>
+

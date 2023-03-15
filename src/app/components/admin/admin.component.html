@@ -1,0 +1,59 @@
+<div class="page-header">
+  <div class="container">
+    <h1>Управление</h1>
+  </div>
+</div>
+<div *ngIf="isUserLoggedIn" class="container">
+  <div>
+    <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+      <li *ngIf="isAdmin" class="nav-item" role="presentation">
+        <button [class.active]="activeTab == 'add-tour'"
+                [routerLink]="['add-tour']"
+                class="nav-link" id="pills-addTour-tab" data-bs-toggle="pill" data-bs-target="#pills-addTour"
+                type="button" role="tab" aria-controls="pills-addTour" aria-selected="true">Добавить тур
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button [class.active]="activeTab == 'orders'"
+                [routerLink]="['orders']"
+                class="nav-link" id="pills-orders-tab" data-bs-toggle="pill" data-bs-target="#pills-orders"
+                type="button" role="tab" aria-controls="pills-orders" aria-selected="false">Заказы
+        </button>
+      </li>
+      <li *ngIf="isAdmin" class="nav-item" role="presentation">
+        <button [class.active]="activeTab == 'statistic'"
+                [routerLink]="['statistic']"
+                class="nav-link" id="pills-stat-tab" data-bs-toggle="pill" data-bs-target="#pills-stat" type="button"
+                role="tab" aria-controls="pills-stat" aria-selected="false">Статистика
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button [class.active]="activeTab == 'user-info'"
+                [routerLink]="['user-info']"
+                class="nav-link" id="pills-user-info-tab" data-bs-toggle="pill" data-bs-target="#pills-user-info" type="button"
+                role="tab" aria-controls="pills-user-info" aria-selected="false">Профиль
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+      <div *ngIf="activeTab == 'add-tour' && isAdmin" class="tab-pane fade show active" id="pills-addTour" role="tabpanel"
+           aria-labelledby="pills-addTour-tab" tabindex="0">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="activeTab == 'orders'" class="tab-pane fade show active" id="pills-orders" role="tabpanel"
+           aria-labelledby="pills-orders-tab" tabindex="0">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="activeTab == 'statistic' && isAdmin" class="tab-pane fade show active" id="pills-stat" role="tabpanel"
+           aria-labelledby="pills-stat-tab" tabindex="0">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="activeTab == 'user-info'" class="tab-pane fade show active" id="pills-user-info" role="tabpanel"
+           aria-labelledby="pills-user-info-tab" tabindex="0">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </div>
+</div>

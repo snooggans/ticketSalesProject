@@ -1,0 +1,43 @@
+<p class="h5 mb-4">Регистрация</p>
+
+<form [formGroup]="userRegistrationForm" (ngSubmit)="onUserRegistrationFormSubmit()">
+
+  <div class="form-floating mb-3">
+    <input formControlName="login" type="text" class="form-control" id="login" placeholder="Логин">
+    <label for="login">Логин</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="psw" type="text" class="form-control" id="psw" placeholder="Пароль">
+    <label for="psw">Пароль</label>
+    <small>Минимум 3 символа</small>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="fistName" type="text" class="form-control" id="fistName" placeholder="Имя">
+    <label for="fistName">Имя</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Фамилия">
+    <label for="lastName">Фамилия</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="email" type="email" class="form-control" id="email" placeholder="E-Mail">
+    <label for="email">E-Mail</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="birthday" type="date" class="form-control" id="birthday" placeholder="Дата рождения">
+    <label for="birthday">Дата рождения</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="citizen" type="citizen" class="form-control" id="citizen" placeholder="Гражданство">
+    <label for="citizen">Гражданство</label>
+  </div>
+  <p-messages [(value)]="msgsUserReg" [enableService]="false"></p-messages>
+  <button [disabled]="userRegistrationForm.invalid" type="submit" class="btn btn-primary">Регистрация</button>
+</form>
+

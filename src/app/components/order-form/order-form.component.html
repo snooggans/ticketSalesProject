@@ -1,0 +1,59 @@
+<div *ngIf="isFormActive; else formNotActive" id="tourOrderForm">
+  <form [formGroup]="tourOrderForm" (ngSubmit)="onTourOrderFormSubmit()">
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="form-floating mb-3">
+          <input pInputText formControlName="fistName" type="text" class="form-control" id="fistName" placeholder="Имя">
+          <label for="fistName">Имя</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-floating mb-3">
+          <input pInputText formControlName="lastName" type="text" class="form-control" id="lastName"
+                 placeholder="Фамилия">
+          <label for="lastName">Фамилия</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-floating mb-3">
+          <input pInputText formControlName="birthday" type="date" class="form-control" id="birthday"
+                 placeholder="Дата рождения">
+          <label for="birthday">Дата рождения</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-floating mb-3">
+          <input pInputText formControlName="email" type="email" class="form-control" id="email" placeholder="E-Mail">
+          <label for="email">E-Mail</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-floating mb-3">
+          <input pInputText formControlName="citizen" type="text" class="form-control" id="citizen"
+                 placeholder="Гражданство">
+          <label for="citizen">Гражданство</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <button (click)="initTourOrderForm()" type="button" class="btn btn-outline-primary btn-lg mt-2 me-2">Мои
+          данные
+        </button>
+        <button type="submit" class="btn btn-primary btn-lg mt-2 ">Заказать</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #formNotActive>
+  <div class="m-5 text-center">
+    <h1 class="mb-5">Спасибо за заказ!</h1>
+    <button (click)="isFormActive=true" class="btn btn-primary btn-lg me-2 mb-xs-2" [routerLink]="['/']" data-bs-dismiss="modal" data-bs-target="#order-modal">Туры</button>
+    <button (click)="isFormActive=true" class="btn btn-primary btn-lg" [routerLink]="['/admin/orders']" data-bs-dismiss="modal" data-bs-target="#order-modal">Мои заказы</button>
+  </div>
+</ng-template>

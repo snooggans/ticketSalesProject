@@ -1,0 +1,66 @@
+<p class="h5 mb-4">Добавить тур</p>
+
+<form [formGroup]="addTourForm" (ngSubmit)="onAddTourFormSubmit()">
+  <div class="row">
+
+    <div class="col-md-9">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="title" type="text" class="form-control" id="title" placeholder="Логин">
+        <label for="title">Название</label>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="input-group mb-3">
+        <div class="form-floating ">
+          <input pInputText formControlName="price" type="number" class="form-control" id="price" placeholder="Цена">
+          <label for="price">Цена</label>
+        </div>
+        <span class="input-group-text">₽</span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="place" type="text" class="form-control" id="place" placeholder="Локация">
+        <label for="place">Локация</label>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="country" type="text" class="form-control" id="country" placeholder="Локация">
+        <label for="country">Страна</label>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-floating mb-3">
+        <input pInputText formControlName="tourOperator" type="text" class="form-control" id="tourOperator" placeholder="Тур оператор">
+        <label for="tourOperator">Тур оператор</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-floating mb-3" >
+    <textarea pInputTextarea formControlName="description" class="form-control" id="description" placeholder="Описание" style="height: 150px"></textarea>
+    <label for="description">Описание</label>
+  </div>
+
+  <div class="mb-3">
+    <p-fileUpload name="img"
+                  [previewWidth]="100"
+                  [multiple]="false"
+                  [fileLimit]="1"
+                  chooseLabel="Выбирите изображени"
+                  [customUpload]="true"
+                  [auto]="true"
+                  accept="image/png, image/jpeg"
+                  (uploadHandler)="selectFile($event)">
+    </p-fileUpload>
+  </div>
+
+  <p-messages [(value)]="msgsAddTour" [enableService]="false"></p-messages>
+  <button [disabled]="addTourForm.invalid" type="submit" class="btn btn-primary btn-lg mt-2 me-2">Добавить тур</button>
+  <button type="button" (click)="initForm()" class="btn btn-primary btn-lg mt-2">Очистить</button>
+</form>

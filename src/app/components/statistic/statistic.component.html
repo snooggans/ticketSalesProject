@@ -1,0 +1,88 @@
+
+<div class="row mb-5 d-flex justify-content-around">
+  <div class="col-md-5 d-flex flex-column">
+    <p class="h4 text-center">10 самых популярных туров</p>
+    <p class="text-center  mb-4">Общий доход</p>
+    <p-chart type="doughnut" [data]="chartDataPrice" [options]="chartOptions"  class="mt-auto"></p-chart>
+  </div>
+  <div class="col-md-5 d-flex flex-column">
+    <p class="h4 text-center">10 самых популярных стран</p>
+    <p class="text-center mb-4">Количество заказов</p>
+    <p-chart type="doughnut" [data]="chartDataCountry" [options]="chartOptions" ></p-chart>
+  </div>
+</div>
+
+<p class="h4 text-center mt-5 pt-5">Детальная статистика по всем турам</p>
+<p class="text-center ">Без учета отмененных заказов</p>
+<p-table [value]="formatedTours" dataKey="title" [tableStyle]="{'min-width': '60rem'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 5rem"></th>
+
+            <th pSortableColumn="title" style="width: 17rem">Тур <p-sortIcon field="title"></p-sortIcon></th>
+
+            <th style="width: 5rem"></th>
+
+            <th pSortableColumn="country">Страна <p-sortIcon field="country"></p-sortIcon></th>
+
+            <th pSortableColumn="place">Локация <p-sortIcon field="place"></p-sortIcon></th>
+
+            <th pSortableColumn="price" style="width: 8rem">Сумма заказов<p-sortIcon field="price"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tour let-expanded="expanded">
+        <tr>
+            <td>
+                <button type="button" pButton pRipple [pRowToggler]="tour" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{tour.title}}</td>
+            <td><img [src]="'http://localhost:3000/public/400x300-' + tour.img" [alt]="tour.title" width="120" class="shadow-4" /></td>
+
+            <td>{{tour.country}}</td>
+            <td>{{tour.place}}</td>
+            <td>{{tour.orders.length > 0 ? tour.price * tour.orders.length : 0}}₽</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-tour>
+        <tr>
+            <td colspan="6" class="p-0 pb-4">
+                <div class="p-0 " >
+                    <p-table [value]="tour.orders" dataKey="name" >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="orderId">Заказ № <p-sortIcon field="orderId"></p-sortIcon></th>
+                                <th pSortableColumn="fistName">Заказчик <p-sortIcon field="fistName"></p-sortIcon></th>
+                                <th pSortableColumn="email">E-Mail<p-sortIcon field="email"></p-sortIcon></th>
+                                <th pSortableColumn="orderDate">Дата<p-sortIcon field="orderDate"></p-sortIcon></th>
+                                <th>Цена</th>
+                                <th pSortableColumn="status" style="width: 7rem">Статус <p-sortIcon field="status"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-order>
+                            <tr>
+                                <td style="background-color: #f3f3f3">{{order.orderId}}</td>
+                                <td style="background-color: #f3f3f3">{{order.fistName}} {{order.lastName}}</td>
+                                <td style="background-color: #f3f3f3"><a href="mailto:{{order.email}}">{{order.email}}</a></td>
+                                <td style="background-color: #f3f3f3">{{order.orderDate | date: 'dd.MM.Y'}}</td>
+                                <td style="background-color: #f3f3f3">{{order.tour.price}}₽</td>
+                                <td style="background-color: #f3f3f3; width: 7rem">
+                                  <div *ngIf="order.status == 'ok'" class="h5 mb-0"><span class="badge bg-success w-100">Подтвержден</span>
+                                  </div>
+                                  <div *ngIf="order.status == 'pending'" class="h5 mb-0"><span class="badge bg-secondary w-100">В ожидании</span>
+                                  </div>
+                                  <div *ngIf="order.status == 'canceled'" class="h5 mb-0"><span class="badge bg-danger w-100">Отменён</span>
+                                  </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="7">Пока что нет заказов</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

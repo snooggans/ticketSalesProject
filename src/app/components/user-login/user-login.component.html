@@ -1,0 +1,24 @@
+<p class="h5 mb-4">Вход</p>
+
+<form [formGroup]="userLoginForm" (ngSubmit)="onUserLoginFormSubmit()">
+
+  <div class="form-floating mb-3">
+    <input formControlName="userLogin" type="text" class="form-control" id="userLogin" placeholder="Логин">
+    <label for="userLogin">Логин</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input formControlName="userPwd" type="password" class="form-control" id="userPwd" placeholder="Пароль">
+    <label for="userPwd">Пароль</label>
+  </div>
+
+  <button [disabled]="userLoginForm.invalid" type="submit" class="btn btn-primary">Войти</button>
+
+</form>
+<div *ngIf="loginMessage.status == 'ok'" class="alert alert-success mt-3" role="alert">
+  {{loginMessage.text}}
+</div>
+
+<div *ngIf="loginMessage.status == 'err'" class="alert alert-danger mt-3" role="alert">
+  {{loginMessage.text}}
+</div>

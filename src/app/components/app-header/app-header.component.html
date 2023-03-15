@@ -1,0 +1,20 @@
+<nav class="navbar fixed-top navbar-expand-md bg-light">
+  <div class="container">
+    <a routerLink="/" class="navbar-brand" >БэстТурс</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a routerLink="/" class="nav-link" aria-current="page">Туры</a>
+        <a routerLink="/" class="nav-link" aria-current="page">О нас</a>
+        <a routerLink="/" class="nav-link" aria-current="page">Обратная связь</a>
+      </div>
+    </div>
+    <button *ngIf="isUserLoggedIn; else notLoggedIn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-person-circle"></i></button>
+    <ng-template #notLoggedIn>
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-person-circle me-1"></i> Войти </button>
+    </ng-template>
+    <button *ngIf="orders && isAdmin"  [routerLink]="['admin','orders']" class="btn btn-outline-primary ms-2"><i class="bi bi-bell-fill me-1"></i> <b>{{orders}}</b></button>
+  </div>
+</nav>

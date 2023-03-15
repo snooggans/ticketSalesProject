@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-4 d-flex align-items-center">
+    <div class="d-flex align-items-center">
+      <p-inputSwitch class="me-3" (onChange)="onlyNewOrders()" [(ngModel)]="onlyPending"></p-inputSwitch>
+      <h5>В ожидании</h5>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <span class="p-input-icon-left w-100">
+        <i class="pi pi-search"></i>
+        <input type="text" class="w-100" [(ngModel)]="orderIdSearch" (keyup)="onOrderIdSearch()" (click)="userNameSearch = ''" pInputText placeholder="Номер заказа">
+      </span>
+  </div>
+  <div *ngIf="isAdmin" class="col-md-4">
+    <span class="p-input-icon-left w-100">
+        <i class="pi pi-search"></i>
+        <input type="text" class="w-100" [(ngModel)]="userNameSearch" (keyup)="onUserNameSearch()" (click)="orderIdSearch = ''" pInputText placeholder="Заказчик">
+      </span>
+  </div>
+</div>
+
+<div *ngIf="orders && orders.length; else nothingFound" class="row mt-5">
+  <div *ngFor="let order of orders" class="col-md-6 col-lg-4 mb-5">
+    <div class="order-list-item">
+      <div *ngIf="order.tour.img" class="order-list-item__img"
+           [ngStyle]="{'background': 'url(http://localhost:3000/public/400x300-' + order.tour.img + ') center / cover'}">
+        <div class="order-list-item__price">{{order.tour.price}} ₽</div>
+
+        <div *ngIf="order.status=='ok'" class="order-list-item__status ok">Подтвержден</div>
+
+        <div *ngIf="order.status=='pending'" class="order-list-item__status pending">В ожидании</div>
+
+        <div *ngIf="order.status=='canceled'" class="order-list-item__status canceled">Отменен</div>
+
+
+        <div class="order-list-item__loc"><i class="bi bi-geo-alt-fill"></i>{{order.tour.country}}, {{order.tour.place}}
+        </div>
+      </div>
+      <div class="order-list-item__content">
+        <span class="h4 mt-4 mb-4">{{order.tour.title}}</span>
+        <div class="order-list-item__to"><i class="bi bi-airplane-fill"></i> {{order.tour.tourOperator}}</div>
+        <div class="order-list-item__to order-list-item__to--light"><i class="bi bi-calendar-plus-fill"></i>Дата
+          заказа: {{order.orderDate | date: 'dd.MM.YYYY'}}</div>
+        <div class="order-list-item__to"><i class="bi bi-info-circle-fill"></i> Заказ №: {{order.orderId}}</div>
+        <p class="h5 mt-2 mb-1 mt-4">Кто поедет:</p>
+        <p class="mb-0">{{order.fistName}} {{order.lastName}}<br>
+          Дата рождения: {{order.birthday | date: 'dd.MM.YYYY'}}<br>
+          Гражданство: {{order.citizen}}<br>
+          E-Mail: {{order.email}}</p>
+      </div>
+      <div class="order-list-item__buttons p-3 d-flex">
+        <button *ngIf="isAdmin" class="btn btn-danger me-auto" type="button" (click)="deleteOrder(order._id)"><i
+          class="bi bi-trash3-fill"></i></button>
+        <button *ngIf="isAdmin" class="btn btn-secondary me-2" [disabled]="order.status == 'pending'" type="button"
+                (click)="updateOrderStatus(order._id, 'pending')"><i class="bi bi-clock-fill"></i></button>
+        <button class="btn btn-warning me-2" [disabled]="order.status == 'canceled'" type="button"
+                (click)="updateOrderStatus(order._id, 'canceled')"><i class="bi bi-x-lg"></i></button>
+        <button *ngIf="isAdmin" class="btn btn-success" [disabled]="order.status == 'ok'" type="button"
+                (click)="updateOrderStatus(order._id, 'ok')"><i class="bi bi-check-lg"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nothingFound>
+  <p class="h2 mt-5">Ничего не найдено</p>
+</ng-template>
